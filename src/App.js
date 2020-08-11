@@ -9,7 +9,7 @@ import HomePage from "./pages/HomePage";
 import { ThemeProvider, CSSReset } from "@chakra-ui/core";
 
 function App({ children }) {
-  const [authenticated] = useState(true);
+  const [authenticated] = useState(false);
   return (
     <ThemeProvider>
       <CSSReset />
