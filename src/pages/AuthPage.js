@@ -1,7 +1,7 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Text, Box, Flex } from "@chakra-ui/core";
 import Logo from "../components/images/Logo";
-import SigininWithGoogleLogo from "../components/images/SigininWithGoogleLogo";
+import SigininWithGoogleLogo from "../components/SigininWithGoogleLogo";
 
 const AuthPage = () => {
   return (

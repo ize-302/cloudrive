@@ -11,6 +11,7 @@ import {
   MenuItem,
 } from "@chakra-ui/core";
 import Logo from "../components/images/Logo";
+import { AuthContext } from "../contexts/AuthContext";
 
 const DashboardLayout = (props) => {
   return (
