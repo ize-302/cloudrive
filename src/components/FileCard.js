@@ -30,7 +30,7 @@ export const FileCard = (props) => {
         justifyContent="flex-start"
         alignItems="flex-start"
         h={[56, 48, 48, 48]}
-        p={[5, 5]}
+        p={[5]}
         as={Button}
       >
         {"." + extension}

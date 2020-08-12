@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { Button, Text, Spinner, Flex } from "@chakra-ui/core";
 import { auth, googleProvider } from "../firebase";
 import { useHistory } from "react-router-dom";
@@ -8,11 +8,14 @@ const SigininWithGoogleLogo = () => {
   const history = useHistory();
   const [loadingStatus, setLoadingStatus] = useState(false);
 
+  const authContext = useContext(AuthContext);
+
   const handleSignin = (provider) => {
     setLoadingStatus(true);
     auth.signInWithPopup(provider).then((response) => {
       if (response.user) {
-        history.push(`/`);
+        authContext.handleAuthStatus();
+        window.localStorage.setItem("userData", JSON.stringify(response.user));
       }
     });
   };

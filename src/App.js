@@ -21,7 +21,7 @@ const App = ({ children }) => {
             <AuthContext.Consumer>
               {(context) => (
                 <>
-                  {context.isAuthorised ? (
+                  {context.loggedIn ? (
                     <DashboardRoutes exact path="/" component={HomePage} />
                   ) : (
                     <AuthPage exact path="/" />
