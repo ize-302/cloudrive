@@ -12,13 +12,8 @@ const HomePage = () => {
         <>
           <ShowFolders />
           <Box mt={10}>
-            <Text
-              fontSize={"2xl"}
-              mb={5}
-              fontWeight="bold"
-              onClick={context.handleAuthStatus}
-            >
-              Recent uploads {context.isAuthorised ? "1" : "0"}
+            <Text fontSize={"2xl"} mb={5} fontWeight="bold">
+              Recent uploads
             </Text>
           </Box>
           <SimpleGrid columns={[1, 2, 3, 4, 5]} spacing={[3, 5, 10]}>
