@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { BrowserRouter as Router, Switch } from "react-router-dom";
 import DashboardRoutes from "./dashboard/dashboardRoutes";
 import AuthPage from "./pages/AuthPage";
@@ -7,26 +7,39 @@ import NotFound from "./components/NotFound";
 import HomePage from "./pages/HomePage";
 
 import { ThemeProvider, CSSReset } from "@chakra-ui/core";
+import AuthContextProvider, { AuthContext } from "./contexts/AuthContext";
 
-function App({ children }) {
-  const [authenticated] = useState(true);
+const App = ({ children }) => {
+  console.log(AuthContext);
   return (
-    <ThemeProvider>
-      <CSSReset />
-      {children}
-      <Router>
-        <Switch>
-          {authenticated ? (
-            <DashboardRoutes exact path="/" component={HomePage} />
-          ) : (
-            <AuthPage exact path="/" />
-          )}
-          <DashboardRoutes exact path="/folder/:id" component={Folder} />
-          <NotFound /> {/* Not found */}
-        </Switch>
-      </Router>
-    </ThemeProvider>
+    <AuthContextProvider>
+      <ThemeProvider>
+        <CSSReset />
+        {children}
+        <Router>
+          <Switch>
+            <AuthContext.Consumer>
+              {(context) => (
+                <>
+                  {context.isAuthorised ? (
+                    <DashboardRoutes exact path="/" component={HomePage} />
+                  ) : (
+                    <AuthPage exact path="/" />
+                  )}
+                  <DashboardRoutes
+                    exact
+                    path="/folder/:id"
+                    component={Folder}
+                  />
+                </>
+              )}
+            </AuthContext.Consumer>
+            <NotFound /> {/* Not found */}
+          </Switch>
+        </Router>
+      </ThemeProvider>
+    </AuthContextProvider>
   );
-}
+};
 
 export default App;
