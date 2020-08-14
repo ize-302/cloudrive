@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { Text, Box, SimpleGrid } from "@chakra-ui/core";
 import { ShowFolders } from "../components/Folders";
 import { items } from "../mockData";

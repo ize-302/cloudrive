@@ -1,11 +1,9 @@
 import React, { useState, useContext } from "react";
 import { Button, Text, Spinner, Flex } from "@chakra-ui/core";
-import { auth, googleProvider } from "../firebase";
-import { useHistory } from "react-router-dom";
+import { auth, googleProvider, db } from "../firebase";
 import { AuthContext } from "../contexts/AuthContext";
 
 const SigininWithGoogleLogo = () => {
-  const history = useHistory();
   const [loadingStatus, setLoadingStatus] = useState(false);
 
   const authContext = useContext(AuthContext);
@@ -14,7 +12,17 @@ const SigininWithGoogleLogo = () => {
     setLoadingStatus(true);
     auth.signInWithPopup(provider).then((response) => {
       if (response.user) {
+        console.log(response.additionalUserInfo.isNewUser);
+        if (response.additionalUserInfo.isNewUser) {
+          // use uid to create new document for user
+          let email = response.user.email;
+          db.collection("users").doc(email).set({
+            folders: [],
+            files: [],
+          });
+        }
         authContext.handleAuthStatus();
+        console.log(response);
         window.localStorage.setItem("userData", JSON.stringify(response.user));
       }
     });

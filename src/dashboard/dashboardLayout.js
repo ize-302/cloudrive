@@ -41,7 +41,7 @@ const DashboardLayout = (props) => {
                 >
                   <Avatar
                     size="sm"
-                    name="Kent Dodds"
+                    name={context.userData.displayName}
                     src={context.userData.photoURL}
                     mr={3}
                   />
