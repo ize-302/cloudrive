@@ -56,10 +56,13 @@ const Folder = ({ match }) => {
   }, [filteredItems]);
 
   const handleRenameFolder = () => {
-    console.log(newFolderName);
-    docRef.get().then(function (doc) {
-      let modifiedFolder = { ...folder, name: newFolderName };
-      console.log(modifiedFolder);
+    folders.map((folder) => {
+      if (folder.id === currentFolderId) {
+        folder.name = newFolderName;
+        return docRef.update({
+          folders: folders,
+        });
+      }
     });
     onClose();
   };
