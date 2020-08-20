@@ -70,7 +70,6 @@ const Folder = ({ match }) => {
   const handleDeleteFolder = () => {
     let getFolders = folders;
     getFolders = getFolders.filter((folder) => folder.id !== currentFolderId);
-    console.log(getFolders);
     docRef
       .update({
         folders: getFolders,
