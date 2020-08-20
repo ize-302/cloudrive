@@ -56,10 +56,13 @@ const Folder = ({ match }) => {
   }, [filteredItems]);
 
   const handleRenameFolder = () => {
-    console.log(newFolderName);
-    docRef.get().then(function (doc) {
-      let modifiedFolder = { ...folder, name: newFolderName };
-      console.log(modifiedFolder);
+    folders.map((folder) => {
+      if (folder.id === currentFolderId) {
+        folder.name = newFolderName;
+        return docRef.update({
+          folders: folders,
+        });
+      }
     });
     onClose();
   };
@@ -67,7 +70,6 @@ const Folder = ({ match }) => {
   const handleDeleteFolder = () => {
     let getFolders = folders;
     getFolders = getFolders.filter((folder) => folder.id !== currentFolderId);
-    console.log(getFolders);
     docRef
       .update({
         folders: getFolders,
