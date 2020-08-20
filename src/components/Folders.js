@@ -45,7 +45,7 @@ export const ShowFolders = () => {
       <Text fontSize={"2xl"} mb={2} fontWeight="bold">
         Folders
       </Text>
-      <SimpleGrid columns={[2, 2, 3, 4, 5]} spacing={3}>
+      <SimpleGrid columns={[1, 2, 3, 4, 5]} spacing={3}>
         {folders.map((folder) => {
           return (
             <FolderCard
