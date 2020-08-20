@@ -11,19 +11,26 @@ const SigininWithGoogleLogo = () => {
   const handleSignin = (provider) => {
     setLoadingStatus(true);
     auth.signInWithPopup(provider).then((response) => {
-      if (response.user) {
-        console.log(response.additionalUserInfo.isNewUser);
-        if (response.additionalUserInfo.isNewUser) {
-          // use uid to create new document for user
-          let email = response.user.email;
-          db.collection("users").doc(email).set({
+      if (!response.additionalUserInfo.isNewUser) {
+        authContext.handleAuthStatus();
+        window.localStorage.setItem("userData", JSON.stringify(response.user));
+      }
+      if (response.additionalUserInfo.isNewUser) {
+        // use uid to create new document for user
+        let email = response.user.email;
+        db.collection("users")
+          .doc(email)
+          .set({
             folders: [],
             files: [],
+          })
+          .then(() => {
+            authContext.handleAuthStatus();
+            window.localStorage.setItem(
+              "userData",
+              JSON.stringify(response.user)
+            );
           });
-        }
-        authContext.handleAuthStatus();
-        console.log(response);
-        window.localStorage.setItem("userData", JSON.stringify(response.user));
       }
     });
   };
