@@ -25,7 +25,7 @@ const HomePage = () => {
       {(context) => (
         <>
           <ShowFolders />
-          <Box mt={10}>
+          {/* <Box mt={10}>
             <Text fontSize={"2xl"} mb={5} fontWeight="bold">
               Recent uploads
             </Text>
@@ -42,7 +42,7 @@ const HomePage = () => {
                 />
               );
             })}
-          </SimpleGrid>
+          </SimpleGrid> */}
         </>
       )}
     </AuthContext.Consumer>
