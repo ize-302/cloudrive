@@ -57,7 +57,8 @@ const Folder = ({ match }) => {
     });
   }, [filteredItems]);
 
-  const handleRenameFolder = () => {
+  const handleRenameFolder = (e) => {
+    e.preventDefault();
     folders.map((folder) => {
       if (folder.id === currentFolderId) {
         folder.name = newFolderName;
@@ -133,20 +134,22 @@ const Folder = ({ match }) => {
               justifyContent="center"
               alignItems="center"
             >
-              <Input
-                placeholder="Folder name"
-                defaultValue={folder.name}
-                onChange={(e) => setNewFolderName(e.target.value)}
-              />
-              <Button
-                bg="#0066F5"
-                color="white"
-                w={"100%"}
-                mt={5}
-                onClick={handleRenameFolder}
-              >
-                Submit
-              </Button>
+              <form onSubmit={handleRenameFolder}>
+                <Input
+                  placeholder="Folder name"
+                  defaultValue={folder.name}
+                  onChange={(e) => setNewFolderName(e.target.value)}
+                />
+                <Button
+                  type="submit"
+                  bg="#0066F5"
+                  color="white"
+                  w={"100%"}
+                  mt={5}
+                >
+                  Submit
+                </Button>
+              </form>
             </ModalBody>
           </ModalContent>
         </Modal>
