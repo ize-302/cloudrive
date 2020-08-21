@@ -18,10 +18,12 @@ import {
   Input,
 } from "@chakra-ui/core";
 import { FileCard } from "../components/FileCard";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { db } from "../firebase";
 
 const Folder = ({ match }) => {
+  let history = useHistory();
+
   let userData = JSON.parse(window.localStorage.getItem("userData"));
   let docRef = db.collection("users").doc(userData.email);
 
@@ -70,13 +72,14 @@ const Folder = ({ match }) => {
   const handleDeleteFolder = () => {
     let getFolders = folders;
     getFolders = getFolders.filter((folder) => folder.id !== currentFolderId);
-    docRef
-      .update({
-        folders: getFolders,
-      })
-      .then(() => {
-        window.location.replace("/");
-      });
+    // update folders
+    docRef.update({
+      folders: getFolders,
+    });
+    // push to home
+    history.push({
+      pathname: "/",
+    });
   };
 
   return (
