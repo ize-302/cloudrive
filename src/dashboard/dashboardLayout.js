@@ -43,9 +43,13 @@ const DashboardLayout = (props) => {
                     size="sm"
                     name={context.userData.displayName}
                     src={context.userData.photoURL}
-                    mr={3}
+                    mr={[0, 0, 3]}
                   />
-                  <Text fontSize={"lg"} fontWeight="bold">
+                  <Text
+                    fontSize={"lg"}
+                    fontWeight="bold"
+                    display={["none", "none", "block"]}
+                  >
                     {context.userData.displayName}
                   </Text>
                 </MenuButton>
