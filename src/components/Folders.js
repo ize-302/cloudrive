@@ -26,7 +26,8 @@ export const ShowFolders = () => {
   const [folders, setFolders] = useState([]);
   const [newFolder, setNewFolder] = useState("");
 
-  const handleAddFolder = () => {
+  const handleAddFolder = (e) => {
+    e.preventDefault();
     onClose();
     return docRef.update({
       folders: [...folders, { id: uuidv4(), name: newFolder }],
@@ -75,19 +76,21 @@ export const ShowFolders = () => {
               justifyContent="center"
               alignItems="center"
             >
-              <Input
-                placeholder="Folder name"
-                onChange={(e) => setNewFolder(e.target.value)}
-              />
-              <Button
-                bg="#0066F5"
-                color="white"
-                onClick={handleAddFolder}
-                w={"100%"}
-                mt={5}
-              >
-                Create folder
-              </Button>
+              <form onSubmit={handleAddFolder}>
+                <Input
+                  placeholder="Folder name"
+                  onChange={(e) => setNewFolder(e.target.value)}
+                />
+                <Button
+                  type="submit"
+                  bg="#0066F5"
+                  color="white"
+                  w={"100%"}
+                  mt={5}
+                >
+                  Create folder
+                </Button>
+              </form>
             </ModalBody>
           </ModalContent>
         </Modal>

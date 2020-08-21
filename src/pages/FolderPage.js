@@ -18,10 +18,12 @@ import {
   Input,
 } from "@chakra-ui/core";
 import { FileCard } from "../components/FileCard";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { db } from "../firebase";
 
 const Folder = ({ match }) => {
+  let history = useHistory();
+
   let userData = JSON.parse(window.localStorage.getItem("userData"));
   let docRef = db.collection("users").doc(userData.email);
 
@@ -55,7 +57,8 @@ const Folder = ({ match }) => {
     });
   }, [filteredItems]);
 
-  const handleRenameFolder = () => {
+  const handleRenameFolder = (e) => {
+    e.preventDefault();
     folders.map((folder) => {
       if (folder.id === currentFolderId) {
         folder.name = newFolderName;
@@ -70,13 +73,14 @@ const Folder = ({ match }) => {
   const handleDeleteFolder = () => {
     let getFolders = folders;
     getFolders = getFolders.filter((folder) => folder.id !== currentFolderId);
-    docRef
-      .update({
-        folders: getFolders,
-      })
-      .then(() => {
-        window.location.replace("/");
-      });
+    // update folders
+    docRef.update({
+      folders: getFolders,
+    });
+    // push to home
+    history.push({
+      pathname: "/",
+    });
   };
 
   return (
@@ -130,20 +134,22 @@ const Folder = ({ match }) => {
               justifyContent="center"
               alignItems="center"
             >
-              <Input
-                placeholder="Folder name"
-                defaultValue={folder.name}
-                onChange={(e) => setNewFolderName(e.target.value)}
-              />
-              <Button
-                bg="#0066F5"
-                color="white"
-                w={"100%"}
-                mt={5}
-                onClick={handleRenameFolder}
-              >
-                Submit
-              </Button>
+              <form onSubmit={handleRenameFolder}>
+                <Input
+                  placeholder="Folder name"
+                  defaultValue={folder.name}
+                  onChange={(e) => setNewFolderName(e.target.value)}
+                />
+                <Button
+                  type="submit"
+                  bg="#0066F5"
+                  color="white"
+                  w={"100%"}
+                  mt={5}
+                >
+                  Submit
+                </Button>
+              </form>
             </ModalBody>
           </ModalContent>
         </Modal>
