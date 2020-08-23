@@ -49,6 +49,12 @@ export const FileCard = (props) => {
       });
   };
 
+  const downloadFile = () => {
+    desertRef.getDownloadURL().then(function (url) {
+      window.open(url, "_blank");
+    });
+  };
+
   useEffect(() => {
     var fileExt = file_name.split(".").pop();
     setExtension(fileExt);
@@ -78,7 +84,7 @@ export const FileCard = (props) => {
       <MenuList>
         <MenuGroup>
           <MenuItem>Move to</MenuItem>
-          <MenuItem>Download</MenuItem>
+          <MenuItem onClick={downloadFile}>Download</MenuItem>
           <MenuItem>Rename</MenuItem>
         </MenuGroup>
         <MenuDivider />
