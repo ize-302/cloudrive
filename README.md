@@ -15,4 +15,5 @@ Deployed at: https://cloudrive.netlify.app
 3. User can delete existing folder :white_check_mark:
 4. User can rename existing folder :white_check_mark:
 5. User can upload new file :white_check_mark:
-6. User can delete file :white_check_mark:
+6. User can download file :white_check_mark:
+7. User can delete file :white_check_mark:
