@@ -1,6 +1,10 @@
 # Cloudrive (google drive clone)
 
-Upload and manage files
+### Upload and manage files
+
+## Tools used:
+
+React/React-hooks, firebase storage, firebase authentication, Cloud firestore
 
 Deployed at: https://cloudrive.netlify.app
 
@@ -12,6 +16,3 @@ Deployed at: https://cloudrive.netlify.app
 4. User can rename existing folder :white_check_mark:
 5. User can upload new file :white_check_mark:
 6. User can delete file :white_check_mark:
-7. User can rename file
-8. User can move file to another folder
-9. User can create a new file copy
