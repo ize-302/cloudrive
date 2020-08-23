@@ -19,7 +19,8 @@ import {
 } from "@chakra-ui/core";
 import { FileCard } from "../components/FileCard";
 import { Link, useHistory } from "react-router-dom";
-import { db } from "../firebase";
+import { db, storage } from "../firebase";
+import { v4 as uuidv4 } from "uuid";
 
 const Folder = ({ match }) => {
   let history = useHistory();
@@ -32,6 +33,8 @@ const Folder = ({ match }) => {
   const [folder, setFolder] = useState({});
   const [filteredItems, setFilteredItems] = useState([]);
   const [newFolderName, setNewFolderName] = useState("");
+
+  const [upload, setUpload] = useState(null);
 
   let currentFolderId = match.params.id;
 
@@ -83,6 +86,48 @@ const Folder = ({ match }) => {
     });
   };
 
+  const onChangeUpload = (e) => {
+    if (e.target.files[0]) {
+      setUpload(e.target.files[0]);
+    }
+  };
+
+  const handleUploadFile = (e) => {
+    e.preventDefault();
+    const uploadTask = storage
+      .ref(`${userData.email}/${upload.name}`)
+      .put(upload);
+    uploadTask.on(
+      "state_changed",
+      (snapshot) => {},
+      (error) => {
+        console.log(error);
+      },
+      () => {
+        // store file
+        storage
+          .ref(`${userData.email}`)
+          .child(upload.name)
+          .getDownloadURL()
+          .then((url) => {
+            console.log(url);
+            console.log(filteredItems);
+            docRef.update({
+              files: [
+                ...filteredItems,
+                {
+                  id: uuidv4(),
+                  date_added: "7/13/2020",
+                  file_name: upload.name,
+                  folder: currentFolderId,
+                },
+              ],
+            });
+          });
+      }
+    );
+  };
+
   return (
     <Box>
       <Flex justifyContent="space-between">
@@ -118,7 +163,10 @@ const Folder = ({ match }) => {
           >
             Delete folder
           </Button>
-          <Button>Upload new file</Button>
+          <form onSubmit={handleUploadFile}>
+            <input type="file" onChange={onChangeUpload} />
+            <Button type="submit">Upload</Button>
+          </form>
         </Flex>
         {/* modal */}
         <Modal onClose={onClose} isOpen={isOpen} isCentered>
