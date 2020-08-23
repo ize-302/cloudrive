@@ -8,12 +8,46 @@ import {
   MenuGroup,
   MenuDivider,
 } from "@chakra-ui/core";
+import { db, storage } from "../firebase";
 
 export const FileCard = (props) => {
   const [extension, setExtension] = useState("");
   const [fileName, setFileName] = useState("");
-
   const { id, file_name, folder_name, date_added } = props;
+
+  let userData = JSON.parse(window.localStorage.getItem("userData"));
+
+  var storageRef = storage.ref();
+  var desertRef = storageRef.child(`${userData.email}/${file_name}`);
+  let docRef = db.collection("users").doc(userData.email);
+
+  const deleteFile = () => {
+    // Delete the file
+    desertRef
+      .delete()
+      .then(function () {
+        // File deleted successfully
+        // remove file from array
+        // fetch files array
+        docRef.get().then(function (doc) {
+          if (doc.exists) {
+            let docData = doc.data();
+            // get files
+            let filteredFiles = docData.files.filter((item) => item.id !== id);
+            console.log(filteredFiles);
+            docRef.update({
+              files: filteredFiles,
+            });
+            alert("deleted");
+          }
+        });
+      })
+
+      .catch(function (error) {
+        alert("error");
+        // Uh-oh, an error occurred!
+      });
+  };
 
   useEffect(() => {
     var fileExt = file_name.split(".").pop();
@@ -48,7 +82,7 @@ export const FileCard = (props) => {
           <MenuItem>Rename</MenuItem>
         </MenuGroup>
         <MenuDivider />
-        <MenuItem>Delete</MenuItem>
+        <MenuItem onClick={deleteFile}>Delete</MenuItem>
       </MenuList>
     </Menu>
   );
