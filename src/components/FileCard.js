@@ -35,7 +35,7 @@ export const FileCard = (props) => {
       >
         {"." + extension}
         <Box mt={[32, 20]} textAlign="left">
-          <Text fontWeight="bold">{fileName}</Text>
+          <Text fontWeight="bold">{fileName.substring(0, 17) + "..."}</Text>
           <Text fontWeight="normal" mt={1} fontSize={"xs"}>
             Uploaded: {date_added}
           </Text>
