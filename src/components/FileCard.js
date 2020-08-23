@@ -83,9 +83,7 @@ export const FileCard = (props) => {
       </MenuButton>
       <MenuList>
         <MenuGroup>
-          <MenuItem>Move to</MenuItem>
           <MenuItem onClick={downloadFile}>Download</MenuItem>
-          <MenuItem>Rename</MenuItem>
         </MenuGroup>
         <MenuDivider />
         <MenuItem onClick={deleteFile}>Delete</MenuItem>
