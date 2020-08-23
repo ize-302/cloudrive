@@ -4,7 +4,7 @@
 
 ## Tools used:
 
-React/React-hooks, firebase storage, firebase authentication, Cloud firestore
+React/React-hooks, Context API, firebase storage, firebase authentication, Cloud firestore
 
 Deployed at: https://cloudrive.netlify.app
 
